@@ -2,10 +2,10 @@ package ru.netology
 
 import kotlin.math.roundToInt
 
-const val PERCENT_MAESTRO_MASTERCARD_FIRST = 0.6f
-const val ADD_MAESTRO_MASTERCARD_FIRST = 20
-const val PERCENT_VISA_MIR_FIRST = 0.75f
-const val MIN_VISA_MIR_FEE = 35
+const val PERCENT_MAESTRO_MASTERCARD_FIRST = 0.6f / 100
+const val ADD_MAESTRO_MASTERCARD_FIRST = 20 * 100
+const val PERCENT_VISA_MIR_FIRST = 0.75f / 100
+const val MIN_VISA_MIR_FEE = 35 * 100
 
 fun main() {
     val amount = 25000 * 100
@@ -35,10 +35,10 @@ fun getTransferFee(amount: Int, previousPaymants: Int = 0, typeCard: TypeCard = 
         TypeCard.VkPay -> 0
         TypeCard.Maestro, TypeCard.MasterCard -> when (previousPaymants) {
             in 0..75_000 -> 0
-            else -> (amount * PERCENT_MAESTRO_MASTERCARD_FIRST / 100 + ADD_MAESTRO_MASTERCARD_FIRST * 100).roundToInt()
+            else -> (amount * PERCENT_MAESTRO_MASTERCARD_FIRST  + ADD_MAESTRO_MASTERCARD_FIRST ).roundToInt()
         }
-        TypeCard.MIR, TypeCard.Visa -> (amount * PERCENT_VISA_MIR_FIRST / 100).roundToInt().coerceAtLeast(
-            MIN_VISA_MIR_FEE * 100
+        TypeCard.MIR, TypeCard.Visa -> (amount * PERCENT_VISA_MIR_FIRST ).roundToInt().coerceAtLeast(
+            MIN_VISA_MIR_FEE
         )
     }
 
