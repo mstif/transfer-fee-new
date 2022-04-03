@@ -13,7 +13,7 @@ fun main() {
         "Комиссия с перевода $amount копеек составит ${
             getTransferFee(
                 amount,
-                74200 * 100,
+                74200 ,
                 TypeCard.MasterCard
             )
         } копеек"
@@ -34,12 +34,10 @@ fun getTransferFee(amount: Int, previousPaymants: Int = 0, typeCard: TypeCard = 
     return when (typeCard) {
         TypeCard.VkPay -> 0
         TypeCard.Maestro, TypeCard.MasterCard -> when (previousPaymants) {
-            in 0..75_000 -> 0
+            in 0..75_000  -> 0
             else -> (amount * PERCENT_MAESTRO_MASTERCARD_FIRST  + ADD_MAESTRO_MASTERCARD_FIRST ).roundToInt()
         }
-        TypeCard.MIR, TypeCard.Visa -> (amount * PERCENT_VISA_MIR_FIRST ).roundToInt().coerceAtLeast(
-            MIN_VISA_MIR_FEE
-        )
+        TypeCard.MIR, TypeCard.Visa -> Math.max((amount * PERCENT_VISA_MIR_FIRST ).roundToInt(), MIN_VISA_MIR_FEE)
     }
 
 
