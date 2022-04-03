@@ -57,6 +57,18 @@ class TransferfeeKtTest {
         Assert.assertEquals(170 * 100, result)
     }
     @Test
+    fun getTransferFee_MasterCard_75000() {
+        val amount = 25000 * 100
+        val typeCard = TypeCard.MasterCard
+        val previosPaymant = 75000
+        val result = getTransferFee(
+            amount = amount,
+            previousPaymants = previosPaymant,
+            typeCard = typeCard
+        )
+        Assert.assertEquals(0, result)
+    }
+    @Test
     fun getTransferFee_Maestro_75000() {
         val amount = 25000 * 100
         val typeCard = TypeCard.Maestro
